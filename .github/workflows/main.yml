@@ -1,0 +1,76 @@
+name: Autograding - Program 16
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+
+  autograding:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Check useToggle.js
+        run: |
+          test -f src/useToggle.js
+          echo "useToggle.js found"
+
+      - name: Check useState
+        run: |
+          grep -q "useState" src/useToggle.js
+          echo "useState found"
+
+      - name: Check useToggle Hook
+        run: |
+          grep -q "useToggle" src/useToggle.js
+          echo "useToggle found"
+
+      - name: Check Toggle Function
+        run: |
+          grep -Eq "function toggle|const toggle|let toggle" src/useToggle.js
+          echo "Toggle function found"
+
+      - name: Check Hook Import
+        run: |
+          grep -q "useToggle" src/App.js
+          echo "useToggle imported/used in App.js"
+
+      - name: Check Toggle Button
+        run: |
+          grep -qi "Toggle" src/App.js
+          echo "Toggle button/content found"
+
+      - name: Run Test Cases
+        run: |
+          npm test -- --watchAll=false
+
+      - name: Build Application
+        run: |
+          npm run build
+
+      - name: Autograding Completed
+        run: |
+          echo "======================================"
+          echo "PROGRAM 16 AUTOGRADING SUCCESSFUL"
+          echo "======================================"
