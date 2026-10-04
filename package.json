@@ -1,7 +1,8 @@
 {
-  "name": "program16-custom-toggle-hook",
+  "name": "program15-custom-toggle-hook",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://shinsmohanan.github.io/rjsprg15/",
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -9,6 +10,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1"
+  },
   },
   "scripts": {
     "start": "react-scripts start",
