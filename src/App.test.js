@@ -1,37 +1,37 @@
-* {
-  box-sizing: border-box;
-}
+import { render, screen, fireEvent } from "@testing-library/react";
+import App from "./App";
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f4f7;
-}
+test("displays OFF initially", () => {
+  render(<App />);
 
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  expect(screen.getByText(/Status:/i)).toHaveTextContent("OFF");
+});
 
-.card {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
+test("changes OFF to ON when Toggle is clicked", () => {
+  render(<App />);
 
-h1 {
-  margin-bottom: 30px;
-}
+  const button = screen.getByRole("button", { name: /toggle/i });
 
-button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
+  fireEvent.click(button);
+
+  expect(screen.getByText(/Status:/i)).toHaveTextContent("ON");
+});
+
+test("changes ON back to OFF when Toggle is clicked again", () => {
+  render(<App />);
+
+  const button = screen.getByRole("button", { name: /toggle/i });
+
+  fireEvent.click(button);
+  fireEvent.click(button);
+
+  expect(screen.getByText(/Status:/i)).toHaveTextContent("OFF");
+});
+
+test("Toggle button exists", () => {
+  render(<App />);
+
+  expect(
+    screen.getByRole("button", { name: /toggle/i })
+  ).toBeInTheDocument();
+});
